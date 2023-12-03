@@ -1,4 +1,5 @@
 # deFrescuraFrontend
 Las dependencias utilizadas fueron 
-React-dom
-Boostrap
+-axios
+-React-dom
+-Boostrap
