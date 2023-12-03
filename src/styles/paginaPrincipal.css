@@ -1,0 +1,76 @@
+body #cuerpo {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #048524;
+    color: #ffffff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  footer .categoria {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  footer .categoria i {
+    color: white;
+  }
+
+  footer .categoria span {
+    color: white;
+    margin-top: 5px;
+  }
+
+thead{
+  width: max-content;
+}
+
+ #mi-tabla th{
+  background-color: #f8f9fa !important;
+
+
+}
+#mi-tabla td{
+  background-color: #f8f9fa !important;
+}
+.boton{
+display: flex;
+width: max-content;
+justify-content: center;
+}
+/* Estilos para pantallas grandes (mayores a 768px) */
+/* Puedes ajustar el valor según tus necesidades */
+@media screen and (width: 250px) and (height: 554px)  {
+
+tr{
+  display: flex;
+  justify-content: space-evenly;
+}
+#mi-tabla th{
+padding: 20px;
+}
+body #cuerpo{
+    font-size: -webkit-xxx-large;
+}
+.boton {
+  display: flex;
+  width: max-content;
+  justify-content: center;
+  padding: 100px;
+}
+  /* Agrega más estilos específicos para pantallas pequeñas según tus necesidades */
+}
