@@ -94,3 +94,12 @@ body #cuerpo{
 }
   /* Agrega más estilos específicos para pantallas pequeñas según tus necesidades */
 }
+
+
+#productos-comprados th{ 
+  background-color: #bd0003;
+  color: white; 
+}
+tbody, td, tfoot, th, thead, tr {
+  border-color: black !important;
+}
