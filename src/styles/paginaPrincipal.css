@@ -61,18 +61,24 @@ div .columna {
   margin: 10px;
 }
 
-#productos-comprados th {
+.tabla-roja table th {
   background-color: #bd0003;
   color: white;
 }
 
-#productos-comprados tbody,
+.tabla-roja  table tbody,
 td,
 tfoot,
 th,
 thead,
 tr {
   border-color: black !important;
+ 
+}
+#vigencia div {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
 }
 
 #pagina-padding {

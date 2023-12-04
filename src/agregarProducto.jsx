@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const AgregarProducto = ({ onProductoAgregado }) => {
+const AgregarProducto = ({
+  onProductoAgregado,
+  productosSeleccionados,
+  setProductosSeleccionados,
+  actualizarTotal,
+}) => {
   const [nombre, setNombre] = useState("");
   const [precio, setPrecio] = useState("");
-  const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState("");
 
   useEffect(() => {
     axios
@@ -39,15 +44,18 @@ const AgregarProducto = ({ onProductoAgregado }) => {
       precio: parseFloat(precio),
     };
 
-    onProductoAgregado(nuevoProducto);
-
-    const productosEnLocalStorage =
-      JSON.parse(localStorage.getItem("productos")) || [];
-
-    localStorage.setItem(
-      "productos",
-      JSON.stringify([...productosEnLocalStorage, nuevoProducto])
+    // Verificar si el producto ya está en la lista
+    const productoExistente = productosSeleccionados.find(
+      (producto) => producto.nombre === nuevoProducto.nombre
     );
+
+    if (!productoExistente) {
+      // Si no existe, agregar el nuevo producto
+      setProductosSeleccionados([...productosSeleccionados, nuevoProducto]);
+
+      // Actualizar el total cuando se agrega un nuevo producto
+      actualizarTotal();
+    }
 
     setNombre("");
     setPrecio("");

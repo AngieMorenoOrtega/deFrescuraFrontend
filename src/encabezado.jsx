@@ -3,6 +3,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
+// Import statements in other files
+import { useClienteContext } from "./client";
+import { useDateContext } from "../src/date";
+
 // Estilos de Styled Components
 const DeFrescuraContainer = styled.div`
   display: flex;
@@ -19,11 +23,12 @@ const Columna = styled.div`
 
 // Componente principal
 const Encabezado = () => {
-  // Estados
+  const { clienteSeleccionado } = useClienteContext();
   const [empresa, setEmpresa] = useState({});
-  const [fechaActual, setFechaActual] = useState("");
-  const [fechaVigencia, setFechaVigencia] = useState("");
+  const { fechaActual, setFechaActual, fechaVigencia, setFechaVigencia } =
+    useDateContext();
   const [tamanioPantalla, setTamanioPantalla] = useState("pequena");
+  const [clientes, setClientes] = useState([]); // Para almacenar la lista de clientes
 
   // Efecto al cargar el componente
   useEffect(() => {
@@ -31,21 +36,6 @@ const Encabezado = () => {
     axios.get("http://localhost:3001/empresa").then((response) => {
       setEmpresa(response.data[0]); // Asumo que solo necesitas un registro
     });
-
-    // Obtener fecha actual
-    const fecha = new Date();
-    const fechaActualFormateada = `${fecha.getDate()}/${
-      fecha.getMonth() + 1
-    }/${fecha.getFullYear()}`;
-    setFechaActual(fechaActualFormateada);
-
-    // Calcular fecha de vigencia (dos días después)
-    const fechaVigenciaCalculada = new Date(fecha);
-    fechaVigenciaCalculada.setDate(fechaVigenciaCalculada.getDate() + 2);
-    const fechaVigenciaFormateada = `${fechaVigenciaCalculada.getDate()}/${
-      fechaVigenciaCalculada.getMonth() + 1
-    }/${fechaVigenciaCalculada.getFullYear()}`;
-    setFechaVigencia(fechaVigenciaFormateada);
 
     // Suscribirse al evento de cambio de tamaño de la pantalla
     const handleResize = () => {
@@ -80,15 +70,37 @@ const Encabezado = () => {
           <p>{empresa.nit}</p>
           <p>{empresa.direccion}</p>
         </Columna>{" "}
-        <Columna>
-          <strong>Vigencia:</strong>
-        </Columna>
-        <Columna>
-          <p>{`Fecha Actual ${fechaActual}`}</p>
-        </Columna>
-        <Columna>
-          <p>{`Fecha Final ${fechaVigencia}`}</p>
-        </Columna>
+        <div className="tabla-roja" id="vigencia">
+          <div>
+            <Columna>
+              <strong>Vigencia:</strong>
+            </Columna>
+            <Columna>
+              <p>{`Fecha Actual ${fechaActual}`}</p>
+              <p>{`Fecha Final ${fechaVigencia}`}</p>
+            </Columna>
+          </div>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Nit</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Direccion</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clienteSeleccionado && (
+                <tr key={clienteSeleccionado.id}>
+                  <td>{`${clienteSeleccionado.nit} `}</td>
+                  <td>{`${clienteSeleccionado.nombre} `}</td>
+                  <td>{`${clienteSeleccionado.telefono}`}</td>
+                  <td>{`${clienteSeleccionado.direccion} - ${clienteSeleccionado.sucursal}`}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </DeFrescuraContainer>
     </div>
   );

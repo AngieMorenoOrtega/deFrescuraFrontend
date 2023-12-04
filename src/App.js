@@ -6,11 +6,15 @@ import Pagina from "./pagina2";
 import Encabezado from "./encabezado";
 const App = () => {
   const [productosSeleccionados, setProductosSeleccionados] = useState([]);
+  const [productosExternosSeleccionados, setProductosExternosSeleccionados] = useState([]);
 
   const handleRedireccionCompra = (productos) => {
     setProductosSeleccionados(productos);
   };
 
+  const handleRedireccionAgregados = (productos) => {
+    setProductosExternosSeleccionados(productos);
+  };
   return (
     <Router>
       <Routes>
@@ -18,11 +22,8 @@ const App = () => {
           path="/compra"
           element={<Factura onRedireccionCompra={handleRedireccionCompra} />}
         />
-        <Route
-          path="/factura"
-          element={<Compra productosSeleccionados={productosSeleccionados} />}
-        />
-        <Route path="/pagina" element={<Pagina></Pagina>}></Route>
+
+        <Route path="/pagina" element={<Pagina onRedireccionAgregar={handleRedireccionAgregados}></Pagina>}></Route>
       </Routes>
     </Router>
   );

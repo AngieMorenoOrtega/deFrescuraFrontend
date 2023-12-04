@@ -1,9 +1,16 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom";
 import App from "./App";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { ClienteProvider } from "../src/client";
+import { DateProvider } from "../src/date";
 
-const root = document.getElementById("root");
-const reactRoot = createRoot(root);
-
-reactRoot.render(<App />);
+ReactDOM.render(
+  <React.StrictMode>
+    <ClienteProvider>
+      <DateProvider>
+        <App />
+      </DateProvider>
+    </ClienteProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
+);
