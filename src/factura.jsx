@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../src/styles/paginaPrincipal.css";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAppleWhole } from "@fortawesome/free-solid-svg-icons";
+import { faLeaf } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Factura = ({ onRedireccionCompra }) => {
   const navigate = useNavigate();
@@ -150,18 +154,26 @@ const Factura = ({ onRedireccionCompra }) => {
         </div>
 
         <footer id="categorias">
+          {/* Mostrar categorías como botones */}
           <div>
-            {/* Mostrar categorías como botones */}
             <button onClick={() => handleCategoriaClick("")}>Todos</button>
-            <button onClick={() => handleCategoriaClick("Frutas")}>
-              Frutas
-            </button>
-            <button onClick={() => handleCategoriaClick("Verduras")}>
-              Verduras
-            </button>
-            <button onClick={() => handleCategoriaClick("Abarrotes")}>
-              Abarrotes
-            </button>
+          </div>
+
+          <div>
+            <button
+              onClick={() => handleCategoriaClick("Frutas")}
+              className="categoria-button"
+            ></button>
+            <FontAwesomeIcon icon={faAppleWhole} />
+            <span>Frutas</span>
+          </div>
+          <div>
+            <button
+              onClick={() => handleCategoriaClick("Verduras")}
+              className="categoria-button"
+            ></button>
+            <FontAwesomeIcon icon={faLeaf} />
+            <span>Verduras</span>
           </div>
         </footer>
       </body>
