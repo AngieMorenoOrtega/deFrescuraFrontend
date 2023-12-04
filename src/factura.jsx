@@ -82,7 +82,7 @@ const Factura = ({ onRedireccionCompra }) => {
 
   function procederAComprar() {
     localStorage.setItem("productos", JSON.stringify(productosSeleccionados));
-    navigate("/factura", { state: { productosSeleccionados } });
+    navigate("/pagina", { state: { productosSeleccionados } });
   }
 
   return (
