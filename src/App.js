@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Factura from "./factura"; // Asegúrate de tener la ruta correcta
 import Compra from "./compra"; // Asegúrate de tener la ruta correcta
 import Pagina from "./pagina2";
+import Encabezado from "./encabezado";
 const App = () => {
   const [productosSeleccionados, setProductosSeleccionados] = useState([]);
 
