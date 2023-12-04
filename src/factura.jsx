@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../src/styles/paginaPrincipal.css";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAppleWhole } from "@fortawesome/free-solid-svg-icons";
+import { faLeaf } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Factura = ({ onRedireccionCompra }) => {
   const navigate = useNavigate();
@@ -78,7 +82,7 @@ const Factura = ({ onRedireccionCompra }) => {
 
   function procederAComprar() {
     localStorage.setItem("productos", JSON.stringify(productosSeleccionados));
-    navigate("/factura", { state: { productosSeleccionados } });
+    navigate("/pagina", { state: { productosSeleccionados } });
   }
 
   return (
@@ -150,17 +154,30 @@ const Factura = ({ onRedireccionCompra }) => {
         </div>
 
         <footer id="categorias">
+          {/* Mostrar categorías como botones */}
           <div>
-            {/* Mostrar categorías como botones */}
-            <button onClick={() => handleCategoriaClick("")}>Todos</button>
-            <button onClick={() => handleCategoriaClick("Frutas")}>
-              Frutas
+            <button onClick={() => handleCategoriaClick("")}>
+              <span>Todos</span>
             </button>
-            <button onClick={() => handleCategoriaClick("Verduras")}>
-              Verduras
+          </div>
+
+          <div>
+            <FontAwesomeIcon icon={faAppleWhole} />
+            <button
+              onClick={() => handleCategoriaClick("Frutas")}
+              className="categoria-button"
+            >
+              <span>Frutas</span>
             </button>
-            <button onClick={() => handleCategoriaClick("Abarrotes")}>
-              Abarrotes
+          </div>
+          <div>
+            <FontAwesomeIcon icon={faLeaf} />{" "}
+            <button
+              onClick={() => handleCategoriaClick("Verduras")}
+              className="categoria-button"
+            >
+              {" "}
+              <span>Verduras</span>
             </button>
           </div>
         </footer>

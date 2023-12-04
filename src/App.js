@@ -22,7 +22,7 @@ const App = () => {
           path="/factura"
           element={<Compra productosSeleccionados={productosSeleccionados} />}
         />
-        <Route path="pagina" element={<Pagina></Pagina>}></Route>
+        <Route path="/pagina" element={<Pagina></Pagina>}></Route>
       </Routes>
     </Router>
   );
