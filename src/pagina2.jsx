@@ -2,12 +2,27 @@ import React from "react";
 import Encabezado from "./encabezado";
 import Compra from "./compra";
 import AgregarProducto from "./agregarProducto";
+import "../src/styles/paginaPrincipal.css";
 const Pagina = () => {
+  const handleProductoAgregado = (nuevoProducto) => {
+    console.log("Producto agregado en el componente padre", nuevoProducto);
+
+    // Retrieve existing products from localStorage
+    const productosEnLocalStorage =
+      JSON.parse(localStorage.getItem("productos")) || [];
+
+    // Add the new product to the array
+    const productosActualizados = [...productosEnLocalStorage, nuevoProducto];
+
+    // Update localStorage with the updated array
+    localStorage.setItem("productos", JSON.stringify(productosActualizados));
+  };
+
   return (
-    <div>
+    <div id="pagina-padding">
       <Encabezado titulo="Mi Página" />
-      <Compra contenido="Este es el contenido de mi página." />
-      <AgregarProducto></AgregarProducto>
+      <Compra handleProductoAgregadoExterno={handleProductoAgregado} />
+      <AgregarProducto onProductoAgregado={handleProductoAgregado} />
     </div>
   );
 };

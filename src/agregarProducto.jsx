@@ -7,7 +7,6 @@ const AgregarProducto = ({ onProductoAgregado }) => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    // Cargar productos desde la base de datos al montar el componente
     axios
       .get("http://localhost:3001/productos")
       .then((response) => {
@@ -23,7 +22,6 @@ const AgregarProducto = ({ onProductoAgregado }) => {
     const nuevoNombre = event.target.value;
     setNombre(nuevoNombre);
 
-    // Buscar el producto en la base de datos y obtener el precio
     const productoEncontrado = productos.find(
       (producto) => producto.nombre === nuevoNombre
     );
@@ -36,16 +34,21 @@ const AgregarProducto = ({ onProductoAgregado }) => {
   };
 
   const handleProductoAgregado = () => {
-    // Crear el nuevo producto
     const nuevoProducto = {
       nombre: nombre,
       precio: parseFloat(precio),
     };
 
-    // Llamar a la función proporcionada por el padre para manejar el nuevo producto
     onProductoAgregado(nuevoProducto);
 
-    // Limpiar los campos después de agregar el producto
+    const productosEnLocalStorage =
+      JSON.parse(localStorage.getItem("productos")) || [];
+
+    localStorage.setItem(
+      "productos",
+      JSON.stringify([...productosEnLocalStorage, nuevoProducto])
+    );
+
     setNombre("");
     setPrecio("");
   };
@@ -65,12 +68,7 @@ const AgregarProducto = ({ onProductoAgregado }) => {
       </div>
       <div>
         <label>Precio:</label>
-        <input
-          type="text"
-          id="precio"
-          value={precio}
-          readOnly
-        />
+        <input type="text" id="precio" value={precio} readOnly />
       </div>
       <div>
         <button onClick={handleProductoAgregado}>Agregar Producto</button>

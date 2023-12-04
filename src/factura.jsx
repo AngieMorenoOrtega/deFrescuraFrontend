@@ -82,7 +82,7 @@ const Factura = ({ onRedireccionCompra }) => {
 
   function procederAComprar() {
     localStorage.setItem("productos", JSON.stringify(productosSeleccionados));
-    navigate("/factura", { state: { productosSeleccionados } });
+    navigate("/pagina", { state: { productosSeleccionados } });
   }
 
   return (
@@ -156,24 +156,29 @@ const Factura = ({ onRedireccionCompra }) => {
         <footer id="categorias">
           {/* Mostrar categorías como botones */}
           <div>
-            <button onClick={() => handleCategoriaClick("")}>Todos</button>
+            <button onClick={() => handleCategoriaClick("")}>
+              <span>Todos</span>
+            </button>
           </div>
 
           <div>
+            <FontAwesomeIcon icon={faAppleWhole} />
             <button
               onClick={() => handleCategoriaClick("Frutas")}
               className="categoria-button"
-            ></button>
-            <FontAwesomeIcon icon={faAppleWhole} />
-            <span>Frutas</span>
+            >
+              <span>Frutas</span>
+            </button>
           </div>
           <div>
+            <FontAwesomeIcon icon={faLeaf} />{" "}
             <button
               onClick={() => handleCategoriaClick("Verduras")}
               className="categoria-button"
-            ></button>
-            <FontAwesomeIcon icon={faLeaf} />
-            <span>Verduras</span>
+            >
+              {" "}
+              <span>Verduras</span>
+            </button>
           </div>
         </footer>
       </body>
