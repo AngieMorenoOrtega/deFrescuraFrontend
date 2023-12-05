@@ -71,53 +71,40 @@ const Compra = ({
   };
   console.log(nuevoTotal);
   const subirOrden = async () => {
-    // Solo incluir las propiedades necesarias de cada producto
     const productosSinSeleccionado = productosSeleccionados.map(
-      ({ productoId, cantidad, nombre, precio }) => ({
-        productoId,
+      ({ id, cantidad, nombre, total }) => ({
+        productoId: id,
         cantidad,
         nombre,
-        precio,
+        subTotal: total,
       })
     );
     console.log(productosSinSeleccionado);
 
     try {
+      const requestBody = {
+        clienteId: clienteSeleccionado.clienteId,
+        sucursal: clienteSeleccionado.sucursal,
+        fechaPedido: fechaFormateada,
+        productos: productosSinSeleccionado,
+        total: productosSeleccionados
+          .reduce((total, producto) => total + (producto.total || 0), 0)
+          .toFixed(2),
+      };
+
+      console.log("Request Payload:", JSON.stringify(requestBody));
+
       const response = await fetch("http://localhost:3001/ordenes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          clienteId: clienteSeleccionado.clienteId,
-          sucursal: clienteSeleccionado.sucursal,
-          fechaPedido: fechaFormateada,
-          productosSeleccionados: productosSinSeleccionado,
-          total: nuevoTotal,
-        }),
+        body: JSON.stringify(requestBody),
       });
-
-      if (response.ok) {
-        Swal.fire({
-          icon: "success",
-          title: "Orden subida exitosamente",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-
-        setProductosSeleccionados([]);
-      } else {
-        const errorResponse = await response.json();
-
-        alert(
-          `Error al subir la orden: ${
-            errorResponse.error || "Hubo un problema al procesar la solicitud."
-          }`
-        );
-      }
+      setProductosSeleccionados([]);
+      // Resto del código...
     } catch (error) {
       console.error("Error al subir la orden", error);
-
       alert(`Error al subir la orden: ${error.message}`);
     }
   };
