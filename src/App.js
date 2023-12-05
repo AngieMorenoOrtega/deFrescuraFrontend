@@ -15,6 +15,7 @@ const App = () => {
   const handleRedireccionAgregados = (productos) => {
     setProductosExternosSeleccionados(productos);
   };
+  
   return (
     <Router>
       <Routes>

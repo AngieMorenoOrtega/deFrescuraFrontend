@@ -13,10 +13,9 @@ const Compra = ({
 }) => {
   const [nuevoTotal, setNuevoTotal] = useState(0);
   const navigate = useNavigate();
-  const { fechaActual, setFechaActual, fechaVigencia, setFechaVigencia } =
-    useDateContext();
+  const { fechaFormateada } = useDateContext();
   const { clienteSeleccionado, setClienteSeleccionado } = useClienteContext();
-
+  console.log(fechaFormateada);
   const cargarProductosDesdeLocalStorage = () => {
     const productosLocalStorage =
       JSON.parse(localStorage.getItem("productos")) || [];
@@ -70,20 +69,20 @@ const Compra = ({
       // No need to call actualizarTotal() here, as we're updating the total for each product
     }
   };
-
+  console.log(nuevoTotal);
   const subirOrden = async () => {
+    // Solo incluir las propiedades necesarias de cada producto
+    const productosSinSeleccionado = productosSeleccionados.map(
+      ({ productoId, cantidad, nombre, precio }) => ({
+        productoId,
+        cantidad,
+        nombre,
+        precio,
+      })
+    );
+    console.log(productosSinSeleccionado);
+
     try {
-      if (!clienteSeleccionado || !clienteSeleccionado.clienteId) {
-        console.error("Cliente seleccionado no válido");
-        return;
-      }
-      console.log("Request Payload:", {
-        clienteId: clienteSeleccionado.clienteId,
-        sucursal: clienteSeleccionado.sucursal,
-        fechaPedido: fechaActual,
-        productosSeleccionados: productosSeleccionados,
-        total: nuevoTotal,
-      });
       const response = await fetch("http://localhost:3001/ordenes", {
         method: "POST",
         headers: {
@@ -92,14 +91,13 @@ const Compra = ({
         body: JSON.stringify({
           clienteId: clienteSeleccionado.clienteId,
           sucursal: clienteSeleccionado.sucursal,
-          fechaPedido: fechaActual,
-          productosSeleccionados: productosSeleccionados,
+          fechaPedido: fechaFormateada,
+          productosSeleccionados: productosSinSeleccionado,
           total: nuevoTotal,
         }),
       });
 
       if (response.ok) {
-        // Mostrar una alerta con SweetAlert
         Swal.fire({
           icon: "success",
           title: "Orden subida exitosamente",
@@ -107,13 +105,20 @@ const Compra = ({
           timer: 1500,
         });
 
-        // Limpiar productos seleccionados después de subir la orden
         setProductosSeleccionados([]);
       } else {
-        console.error("Error al subir la orden:", response.statusText);
+        const errorResponse = await response.json();
+
+        alert(
+          `Error al subir la orden: ${
+            errorResponse.error || "Hubo un problema al procesar la solicitud."
+          }`
+        );
       }
     } catch (error) {
       console.error("Error al subir la orden", error);
+
+      alert(`Error al subir la orden: ${error.message}`);
     }
   };
 

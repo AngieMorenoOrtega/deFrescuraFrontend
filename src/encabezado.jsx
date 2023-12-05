@@ -25,8 +25,7 @@ const Columna = styled.div`
 const Encabezado = () => {
   const { clienteSeleccionado } = useClienteContext();
   const [empresa, setEmpresa] = useState({});
-  const { fechaActual, setFechaActual, fechaVigencia, setFechaVigencia } =
-    useDateContext();
+  const { fechaFormateada, fechaVigencia } = useDateContext();
   const [tamanioPantalla, setTamanioPantalla] = useState("pequena");
   const [clientes, setClientes] = useState([]); // Para almacenar la lista de clientes
 
@@ -76,7 +75,7 @@ const Encabezado = () => {
               <strong>Vigencia:</strong>
             </Columna>
             <Columna>
-              <p>{`Fecha Actual ${fechaActual}`}</p>
+              <p>{`Fecha Actual ${fechaFormateada}`}</p>
               <p>{`Fecha Final ${fechaVigencia}`}</p>
             </Columna>
           </div>
