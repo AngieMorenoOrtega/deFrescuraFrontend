@@ -7,7 +7,7 @@ import { faAppleWhole } from "@fortawesome/free-solid-svg-icons";
 import { faLeaf } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-const Factura = ({ onRedireccionCompra }) => {
+const Factura = () => {
   const navigate = useNavigate();
   const [productos, setProductos] = useState([]);
   const [productosSeleccionados, setProductosSeleccionados] = useState([]);
@@ -80,10 +80,12 @@ const Factura = ({ onRedireccionCompra }) => {
     }
   };
 
+  // ...
   function procederAComprar() {
     localStorage.setItem("productos", JSON.stringify(productosSeleccionados));
     navigate("/pagina", { state: { productosSeleccionados } });
   }
+  // ...
 
   return (
     <div>
